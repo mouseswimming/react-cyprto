@@ -5,7 +5,8 @@ import moment from "moment";
 import Loader from "../components/Loader";
 
 import { Card, Col, Row, Select, Typography, Form } from "antd";
-import { useGetCryptosQuery } from "../services/cryptoApi";
+import { useGetCoinsQuery } from "../services/coinGeckoApi";
+
 const { Title } = Typography;
 const { Meta } = Card;
 
@@ -21,7 +22,8 @@ export default function NewsView({ simplified }) {
     newsCategory,
   });
 
-  const { data: coinsData } = useGetCryptosQuery(100);
+  const { data: coinsData, isFetching: isCoinsFetching } =
+    useGetCoinsQuery(count);
 
   useEffect(() => {
     const filteredData = data?.filter((feed) => feed.body);
@@ -32,9 +34,15 @@ export default function NewsView({ simplified }) {
     }
   }, [data]);
 
-  const [searchTerm, setSearchTerm] = useState("");
-
   if (isFetching) return <Loader />;
+
+  const options = [{ label: "Cryptocurrency", value: "Cryptocurrency" }];
+  coinsData.forEach((coin) => {
+    options.push({ label: coin.name, value: coin.name });
+  });
+
+  const filterOption = (input, option) =>
+    (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   return (
     <>
@@ -47,23 +55,13 @@ export default function NewsView({ simplified }) {
               showSearch
               placeholder="search news for crypto"
               optionFilterProp="children"
-              value={newsCategory}
+              defaultValue={newsCategory}
               onChange={(value) => setNewsCategory(value)}
-              filterOption={(input, option) =>
-                option.children
-                  .toLowerCase()
-                  .includes(input.toLocaleLowerCase())
-              }
+              filterOption={filterOption}
+              options={options}
               size="large"
               className="w-1/3"
-            >
-              <Option value="Cryptocurrency">Cryptocurrency</Option>
-              {coinsData?.data?.coins?.map((coin) => (
-                <Option key={coin.name} value={coin.name}>
-                  {coin.name}
-                </Option>
-              ))}
-            </Select>
+            />
           </div>
         </div>
       )}

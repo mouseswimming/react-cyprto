@@ -1,17 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { cryptoApi } from "../services/cryptoApi";
 import { cryptoNewsApi } from "../services/crypotNewsApi";
+import { coinGeckoApi } from "../services/coinGeckoApi";
 
 const store = configureStore({
   reducer: {
-    [cryptoApi.reducerPath]: cryptoApi.reducer,
     [cryptoNewsApi.reducerPath]: cryptoNewsApi.reducer,
+    [coinGeckoApi.reducerPath]: coinGeckoApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-      .concat(cryptoApi.middleware)
-      .concat(cryptoNewsApi.middleware),
+      .concat(cryptoNewsApi.middleware)
+      .concat(coinGeckoApi.middleware),
 });
 
 export default store;

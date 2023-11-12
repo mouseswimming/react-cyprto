@@ -24,18 +24,13 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  // getItem("Home", "/", <RiHome3Line />),
-  // getItem("Crptocurrencies", "/cryptocurrencies", <RiLineChartLine />),
-  // getItem("Exchanges", "/exchanges", <TbArrowsExchange />),
-  // getItem("News", "/news", <RiNewspaperLine />),
-  { label: "Home", key: "/", icon: <RiHome3Line /> },
-  {
-    label: "Crptocurrencies",
-    key: "/cryptocurrencies",
-    icon: <RiLineChartLine />,
-  },
-  { label: "Exchanges", key: "/exchanges", icon: <TbArrowsExchange /> },
-  { label: "News", key: "/news", icon: <RiNewspaperLine /> },
+  getItem("Home", "/", <RiHome3Line />),
+  { type: "divider" },
+  getItem("Crptocurrencies", "/cryptocurrencies", <RiLineChartLine />),
+  { type: "divider" },
+  getItem("Exchanges", "/exchanges", <TbArrowsExchange />),
+  { type: "divider" },
+  getItem("News", "/news", <RiNewspaperLine />),
 ];
 
 function App() {
@@ -64,7 +59,7 @@ function App() {
           />
         </Sider>
         <Layout className="overflow-y-auto block">
-          <Content className="m-8 clear-both ">
+          <Content className="clear-both max-w-[1503px] mx-auto my-12 ">
             <Routes>
               <Route path="/" element={<HomeView />} />
               <Route path="/exchanges" element={<ExchangeView />} />

@@ -1,48 +1,44 @@
 import { Typography, Card, Col, Row, Statistic, Skeleton, Button } from "antd";
 import CountUp from "react-countup";
-import { useGetCryptosQuery } from "../services/cryptoApi";
 import millify from "millify";
 import { Link } from "react-router-dom";
 import CryptoCurrenciesView from "./CryptoCurrenciesView";
 import NewsView from "./NewsView";
+import { useGetCoinsQuery, useGetGlobalQuery } from "../services/coinGeckoApi";
 
 const { Title } = Typography;
 
 export default function HomeView() {
   const formatter = (value) => <CountUp end={value} separator="," />;
 
-  const { data, isFetching } = useGetCryptosQuery(12);
-  const globalStats = data?.data?.stats;
+  const { data: globalStats, isFetching: isStatsFetching } =
+    useGetGlobalQuery();
 
   const stats = [];
-  stats.push(
-    {
-      title: "Total Market Cap",
-      value: millify(globalStats?.totalMarketCap || 0),
-      useFormatter: false,
-    },
-    {
-      title: "Total Coins",
-      value: globalStats?.totalCoins,
-      useFormatter: true,
-    },
-    {
-      title: "Total Exchanges",
-      value: globalStats?.totalExchanges,
-      useFormatter: true,
-    },
-
-    // {
-    //   title: "Total 24h Volume",
-    //   value: millify(globalStats?.total24hVolume || 0),
-    //   useFormatter: false,
-    // },
-    {
-      title: "Total Markets",
-      value: globalStats?.totalMarkets,
-      useFormatter: true,
-    }
-  );
+  if (!isStatsFetching) {
+    stats.push(
+      {
+        title: "Total Market Cap",
+        value: millify(globalStats?.data.total_market_cap.usd),
+        useFormatter: false,
+      },
+      {
+        title: "Total Volume",
+        value: millify(globalStats?.data.total_volume.usd),
+        useFormatter: false,
+      },
+      {
+        title: "Total Markets",
+        value: globalStats?.data.markets,
+        useFormatter: true,
+      },
+      {
+        title: "Total Coins",
+        value: globalStats?.data.active_cryptocurrencies,
+        useFormatter: true,
+      }
+    );
+  }
 
   return (
     <>
@@ -51,8 +47,8 @@ export default function HomeView() {
         {stats.map((stat) => (
           <Col xs={24} sm={12} lg={6} key={stat.title}>
             <Card bordered={false}>
-              {isFetching && <Skeleton active paragraph={{ rows: 1 }} />}
-              {!isFetching && (
+              {isStatsFetching && <Skeleton active paragraph={{ rows: 1 }} />}
+              {!isStatsFetching && (
                 <Statistic
                   title={stat.title}
                   value={stat.value}
