@@ -44,9 +44,9 @@ export default function CryptoCurrenciesView({ simplified }) {
           />
         </div>
       )}
-      <Row gutter={[16, 16]}>
+      <Row className="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
         {cryptos?.map((coin) => (
-          <Col xs={24} md={12} lg={8} xl={6} xxl={4} key={coin.id}>
+          <Col key={coin.id}>
             <Link to={`/crypto/${coin.id}`}>
               <Card
                 title={`${coin.market_cap_rank}. ${coin.name}`}

@@ -17,7 +17,7 @@ export default function NewsView({ simplified }) {
   const [news, setNews] = useState([]);
   const [newsCategory, setNewsCategory] = useState("Cryptocurrency");
 
-  const count = simplified ? 6 : 20;
+  const count = simplified ? 8 : 20;
   const { data, isFetching } = useGetCryptoNewsQuery({
     newsCategory,
   });
@@ -34,7 +34,7 @@ export default function NewsView({ simplified }) {
     }
   }, [data]);
 
-  if (isFetching) return <Loader />;
+  if (isFetching || isCoinsFetching) return <Loader />;
 
   const options = [{ label: "Cryptocurrency", value: "Cryptocurrency" }];
   coinsData.forEach((coin) => {
@@ -68,7 +68,7 @@ export default function NewsView({ simplified }) {
 
       <Row
         gutter={[16, 16]}
-        className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+        className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
       >
         {news?.map((coinNew) => (
           <Col key={coinNew.id}>
@@ -82,7 +82,7 @@ export default function NewsView({ simplified }) {
                 />
               }
             >
-              <a href={coinNew.url} target="_blank" rel="noreferrer">
+              <a href={coinNew.url} target="_blank" rel="noopener noreferrer">
                 <Meta title={coinNew.title} />
               </a>
               <p className="text-xs text-gray-500 my-2">
@@ -94,7 +94,7 @@ export default function NewsView({ simplified }) {
                 <a
                   href={`https://${coinNew.domain}`}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                 >
                   {coinNew.domain}
                 </a>

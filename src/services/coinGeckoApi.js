@@ -23,6 +23,9 @@ export const coinGeckoApi = createApi({
       query: ({ coinId, timePeriod }) =>
         `coins/${coinId}/market_chart?vs_currency=usd&days=${timePeriod}`,
     }),
+    getExchanges: builder.query({
+      query: () => `/exchanges`,
+    }),
   }),
 });
 
@@ -31,4 +34,5 @@ export const {
   useGetGlobalQuery,
   useGetCoinQuery,
   useGetCoinHistoryQuery,
+  useGetExchangesQuery,
 } = coinGeckoApi;

@@ -7,11 +7,8 @@ export const cryptoNewsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl,
     prepareHeaders: (headers) => {
-      headers.set(
-        "X-RapidAPI-Key",
-        "47fc258af2msh3a24669b7130cc4p1ddbdfjsn3f8d6fb9dff0"
-      );
-      headers.set("X-RapidAPI-Host", "biztoc.p.rapidapi.com");
+      headers.set("X-RapidAPI-Key", import.meta.env.VITE_RAPIDAPI_KEY);
+      headers.set("X-RapidAPI-Host", import.meta.env.VITE_RAPIDAPI_HOST);
 
       return headers;
     },
