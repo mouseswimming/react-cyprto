@@ -2,6 +2,8 @@
 
 Welcome to Crypto Explorer, a cryptocurrency app built using React as a framework, Ant Design for the UI, React Router, React Toolkit, and Tailwind for styling.
 
+[Demo](https://vivian-crypto-watch.netlify.app/)
+
 ![image](https://github.com/mouseswimming/react-cyprto/assets/2342125/17e30e37-e04f-444a-acf7-3c5181f4702e)
 ![image](https://github.com/mouseswimming/react-cyprto/assets/2342125/66e28347-0fb4-400e-a20f-1441c1c7a34a)
 ![image](https://github.com/mouseswimming/react-cyprto/assets/2342125/de1beb22-3c45-4a97-a2c5-f4e877672760)
